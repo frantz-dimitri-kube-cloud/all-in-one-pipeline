@@ -1,0 +1,37 @@
+name: CI/CD React to On-Prem K8s
+
+on:
+  push:
+    branches:
+      - dimitri
+    paths-ignore:
+      - 'README.md'
+    
+jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    container:
+      image: node:24.20.0-alpine3.24
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sh ./scripts/setup.sh
+      - name: Run unit tests
+        run: sh ./scripts/test-unit.sh
+
+  test-sast:
+    runs-on: ubuntu-latest
+    container:
+      image: kalilinux/kali-rolling:amd64
+    steps:
+      - name: Install required tools
+        run: apt-get update && apt-get install -y nodejs npm
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
+      - name: Run SAST Scan
+        run: npm run test
+      
+
