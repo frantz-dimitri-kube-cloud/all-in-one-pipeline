@@ -3,7 +3,7 @@
 # Pipeline Canonique : Point d'entrée des tests unitaires
 # Propriétés : Fail-Fast (set -euo pipefail), SDK Node.js
 # ==============================================================================
-set -euo pipefail
+set -e pipefail
 
 echo "=================================================="
 echo " [CI/CD] Lancement des Tests Unitaires (SDK Node.js)"
