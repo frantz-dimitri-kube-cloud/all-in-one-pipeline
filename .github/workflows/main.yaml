@@ -63,7 +63,8 @@ jobs:
           output: 'trivy-results.sarif'
           severity: CRITICAL,HIGH
           exit-code: 0
-        
-      
-          # docker tag hexapass:${{ env.VERSION }} frantzdimitrikubecloud/hexapass:${{ env.VERSION }}
-          # docker push frantzdimitrikubecloud/hexapass:${{ env.VERSION }}
+
+      - name: Push Docker image
+        run: |
+          docker tag hexapass:${{ env.VERSION }} frantzdimitrikubecloud/hexapass:${{ env.VERSION }}
+          docker push frantzdimitrikubecloud/hexapass:${{ env.VERSION }}
