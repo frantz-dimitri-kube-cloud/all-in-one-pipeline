@@ -55,7 +55,7 @@ jobs:
           docker build -t hexapass:${{ env.VERSION }} .
 
       - name: Scan Docker image via Trivy
-        uses: aquasecurity/trivy-action@v3
+        uses: aquasecurity/trivy-action@master
         with:
           scan-type: 'image'
           scan-ref: hexapass:${{ env.VERSION }}
