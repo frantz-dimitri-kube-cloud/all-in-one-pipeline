@@ -31,7 +31,7 @@ jobs:
         run: sh ./scripts/test-sast.sh
 
   image-factory:
-    needs: ci-testing
+    needs: test-sast
     outputs:
       version: ${{ steps.get_version.outputs.VERSION }}
     runs-on: ubuntu-latest
