@@ -23,15 +23,9 @@ jobs:
   test-sast:
     runs-on: ubuntu-latest
     container:
-      image: kalilinux/kali-rolling:amd64
+      image: semgrep/semgrep:latest
     steps:
-      - name: Install required tools
-        run: apt-get update && apt-get install -y nodejs npm
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: npm install
-      - name: Run SAST Scan
-        run: npm run test
-      
-
+      - name: Run SAST scan (Semgrep)
+        run: sh ./scripts/test-sast.sh

@@ -18,8 +18,7 @@ describe('Suite de Tests Unitaires - HexaPass (CI/CD)', () => {
   describe('A. Authentification & Validation des Formulaires', () => {
     it('1. should validate email format before authentication attempt', () => {
       const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      // ERREUR VOLONTAIRE : on attend false pour une adresse valide pour tester le Fail-Fast du pipeline CI
-      expect(validateEmail('admin@hexapass.io')).toBe(false);
+      expect(validateEmail('admin@hexapass.io')).toBe(true);
       expect(validateEmail('invalid-user-email')).toBe(false);
       expect(validateEmail('')).toBe(false);
     });
