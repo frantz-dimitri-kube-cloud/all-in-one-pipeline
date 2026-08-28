@@ -1,0 +1,11 @@
+# Fichiers de configuration CI/CD
+.github/
+
+# Dépendances et builds
+node_modules/
+dist/
+build/
+
+# Rapports et couverture de tests
+reports/
+coverage/

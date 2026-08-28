@@ -12,7 +12,7 @@ echo "=================================================="
 # Exécution du scan Semgrep
 # --config auto : applique les règles recommandées (OWASP Top 10, CWE, etc.)
 # --error : renvoie un code d'erreur (exit code != 0) si des vulnérabilités critiques sont trouvées
-semgrep scan --config auto --error
+semgrep scan --config auto --severity ERROR # --error retour direct de 1 en cas d'erreur critique
 
 EXIT_CODE=$?
 
