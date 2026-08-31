@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dimitri
+    paths:
+      - 'release.version'
     paths-ignore:
       - 'README.md'
     
