@@ -4,5 +4,5 @@ on: [push]
 
 jobs:
   call-ci:
-    uses: github.com/frantzdimitrikubecloud/mutual-pipeline/.github/workflows/github-ci.yaml@dimitri-mutual
+    uses: frantz-dimitri-kube-cloud/mutual-pipeline/.github/workflows/github-ci.yaml@dimitri-mutual
     secrets: inherit
