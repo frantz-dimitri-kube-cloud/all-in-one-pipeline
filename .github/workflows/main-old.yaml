@@ -3,7 +3,7 @@ name: CI/CD React to On-Prem K8s
 on:
   push:
     branches:
-      - dimitri
+      - main
     paths:
       - 'release.version'
     paths-ignore:
