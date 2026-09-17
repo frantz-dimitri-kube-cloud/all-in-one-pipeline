@@ -1,0 +1,72 @@
+name: CI/CD React to On-Prem K8s
+
+on:
+  push:
+    branches:
+      - dimitri
+    paths:
+      - 'release.version'
+    paths-ignore:
+      - 'README.md'
+    
+jobs:
+  test-unit:
+    runs-on: ubuntu-latest
+    container:
+      image: node:24
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sh ./scripts/setup.sh
+      - name: Run unit tests
+        run: sh ./scripts/test-unit.sh
+
+  test-sast:
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Run SAST scan (Semgrep)
+        run: sh ./scripts/test-sast.sh
+
+  image-factory:
+    needs: test-sast
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to Docker Registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Get version from release.version
+        id: get_version
+        run: |
+          VERSION=$(cat release.version)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build Docker image
+        run: |
+          docker build -t hexapass:${{ env.VERSION }} .
+
+      - name: Scan Docker image via Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'image'
+          scan-ref: hexapass:${{ env.VERSION }}
+          format: table
+          output: 'trivy-results.sarif'
+          severity: CRITICAL,HIGH
+          exit-code: 0
+
+      - name: Push Docker image
+        run: |
+          docker tag hexapass:${{ env.VERSION }} frantzdimitrikubecloud/hexapass:${{ env.VERSION }}
+          docker push frantzdimitrikubecloud/hexapass:${{ env.VERSION }}

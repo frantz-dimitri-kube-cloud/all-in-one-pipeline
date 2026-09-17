@@ -1,0 +1,6 @@
+projectKey=sonarqube-hand-on
+serverUrl=http://192.168.1.21:9000
+serverVersion=26.7.0.124771
+dashboardUrl=http://192.168.1.21:9000/dashboard?id=sonarqube-hand-on
+ceTaskId=3f143abc-6dc2-46e3-b292-5849cd464461
+ceTaskUrl=http://192.168.1.21:9000/api/ce/task?id=3f143abc-6dc2-46e3-b292-5849cd464461
